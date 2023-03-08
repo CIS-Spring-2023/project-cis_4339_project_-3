@@ -9,6 +9,7 @@ export const useLoggedInUserStore = defineStore({
     return {
       name: "",
       isLoggedIn: false,
+      role: "",
     }
   },
   // equivalent to methods in components, perfect to define business logic
@@ -19,6 +20,7 @@ export const useLoggedInUserStore = defineStore({
         this.$patch({
           isLoggedIn: response.isAllowed,
           name: response.name,
+          role: response.role,
         })
         this.$router.push("/");
       } catch(error) {
@@ -26,9 +28,10 @@ export const useLoggedInUserStore = defineStore({
       }
     },
     logout() {
-      this.patch({
+      this.$patch({
         name: "",
-        isLoggedIn: false
+        isLoggedIn: false,
+        role:"",
       });
 
       // we could do other stuff like redirecting the user
@@ -38,7 +41,7 @@ export const useLoggedInUserStore = defineStore({
 
 //simulate a login - we will later use our backend to handle authentication
 function apiLogin(u, p) {
-  if (u === "ed" && p === "ed") return Promise.resolve({ isAllowed: true, name: "John Doe" });
-  if (p === "ed") return Promise.resolve({ isAllowed: false });
+  if (u === "ed" && p === "ed") return Promise.resolve({ isAllowed: true, name: "John Doe" , role: 'admin'});
+  if (u === "test" && p === "test") return Promise.resolve({ isAllowed: true, name: "default-user" , role: 'user'});
   return Promise.reject(new Error("invalid credentials"));
 }

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedinUser"
 
 export default {
   name: 'App',
@@ -16,6 +17,12 @@ export default {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
     })
+  },
+  setup() {
+    const user = useLoggedInUserStore()
+    return {
+      user
+    }
   }
 }
 </script>
@@ -29,13 +36,21 @@ export default {
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
             <li>
-              <router-link to="/login">
+              <router-link v-if="!user.isLoggedIn" to="/login">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
                   >login</span
                 >
                 Login
+              </router-link>
+              <router-link v-if="user.isLoggedIn" v-on:click="user.logout()" to="/">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >logout</span
+                >
+                Logout
               </router-link>
             </li>
             <li>
@@ -49,27 +64,7 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/intakeform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >people</span
-                >
-                Client Intake Form
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/eventform">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >event</span
-                >
-                Create Event
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/findclient">
+              <router-link v-if="user.isLoggedIn" to="/findclient">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
@@ -79,13 +74,33 @@ export default {
               </router-link>
             </li>
             <li>
-              <router-link to="/findevents">
+              <router-link v-if="user.isLoggedIn" to="/findevents">
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="user.role === 'admin' && user.isLoggedIn" to="/intakeform">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >people</span
+                >
+                Client Intake Form
+              </router-link>
+            </li>
+            <li>
+              <router-link v-if="user.role === 'admin' && user.isLoggedIn" to="/eventform">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >event</span
+                >
+                Create Event
               </router-link>
             </li>
           </ul>
