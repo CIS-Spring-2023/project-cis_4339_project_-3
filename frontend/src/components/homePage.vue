@@ -2,6 +2,7 @@
 import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
+// piechart functionality added
 import clientZipcode from './pieChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 
@@ -15,6 +16,7 @@ export default {
       recentEvents: [],
       labels: [],
       chartData: [],
+      // piechart data hard coded
       zipcodes: ['77007', '77581', '77584', '77001', '77003'],
       zipamt: [2, 19, 12, 4, 1],
       loading: false,
