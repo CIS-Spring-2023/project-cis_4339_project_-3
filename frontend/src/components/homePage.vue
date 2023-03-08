@@ -2,17 +2,21 @@
 import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
+import clientZipcode from './pieChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   components: {
-    AttendanceChart
+    AttendanceChart,
+    clientZipcode
   },
   data() {
     return {
       recentEvents: [],
       labels: [],
       chartData: [],
+      zipcodes: ['77007', '77581', '77584', '77001', '77003'],
+      zipamt: [2, 19, 12, 4, 1],
       loading: false,
       error: null
     }
@@ -73,18 +77,20 @@ export default {
 <template>
   <main>
     <div>
-      <h1
-        class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
-      >
+      <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">
         Welcome
       </h1>
       <br />
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-      >
-      
-        <div class="ml-10"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+
+        <div class="ml-10">        
+      </div>
+
         <div class="flex flex-col col-span-2">
+          <div>
+          <clientZipcode :label="zipcodes" :chart-data="zipamt"></clientZipcode>
+        </div>
+        <div>
           <table class="min-w-full shadow-md rounded">
             <thead class="bg-gray-50 text-xl">
               <tr class="p-4 text-left">
@@ -94,29 +100,20 @@ export default {
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-300">
-              <tr
-                @click="editEvent(event._id)"
-                v-for="event in recentEvents"
-                :key="event._id"
-              >
+              <tr @click="editEvent(event._id)" v-for="event in recentEvents" :key="event._id">
                 <td class="p-2 text-left">{{ event.name }}</td>
                 <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
                 <td class="p-2 text-left">{{ event.attendees.length }}</td>
               </tr>
             </tbody>
           </table>
+        </div>
           <div>
-            <AttendanceChart
-              v-if="!loading && !error"
-              :label="labels"
-              :chart-data="chartData"
-            ></AttendanceChart>
+            <AttendanceChart v-if="!loading && !error" :label="labels" :chart-data="chartData"></AttendanceChart>
 
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
-              <p
-                class="text-6xl font-bold text-center text-gray-500 animate-pulse"
-              >
+              <p class="text-6xl font-bold text-center text-gray-500 animate-pulse">
                 Loading...
               </p>
             </div>
