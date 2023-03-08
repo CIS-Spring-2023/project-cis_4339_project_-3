@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 // make all paths and names lowercase for consistency
 const routes = [
   {
+    path: "/login",
+    name: "login",
+    component: () => import('../views/login.vue')
+  },
+  {
     path: '/',
     props: true,
     component: () => import('../components/homePage.vue')
@@ -39,7 +44,7 @@ const routes = [
     name: 'eventdetails',
     props: true,
     component: () => import('../components/eventDetails.vue')
-  }
+  },
 ]
 const router = createRouter({
   history: createWebHistory(),

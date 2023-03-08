@@ -1,4 +1,7 @@
 <script>
+import { BTable } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
 
@@ -25,6 +28,16 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
+            <li>
+              <router-link to="/login">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >login</span
+                >
+                Login
+              </router-link>
+            </li>
             <li>
               <router-link to="/">
                 <span
