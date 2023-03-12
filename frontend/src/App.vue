@@ -113,6 +113,16 @@ export default {
                 Create Event
               </router-link>
             </li>
+            <li>
+              <router-link v-if="user.role === 'admin' && user.isLoggedIn" to="/services">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >business</span
+                >
+                Services
+              </router-link>
+            </li>
           </ul>
         </nav>
       </header>
