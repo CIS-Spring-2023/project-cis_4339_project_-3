@@ -84,6 +84,16 @@ export default {
               </router-link>
             </li>
             <li>
+              <router-link v-if="user.isLoggedIn" to="/services">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >services</span
+                >
+                Services
+              </router-link>
+            </li>
+            <li>
               <router-link v-if="user.role === 'admin' && user.isLoggedIn" to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
