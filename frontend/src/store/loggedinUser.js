@@ -33,10 +33,10 @@ export const useLoggedInUserStore = defineStore({
         isLoggedIn: false,
         role:"",
       });
-
-      // we could do other stuff like redirecting the user
     }
-  }
+  },
+  // prevents user from being logged out after refreshing
+  persist: {storage: sessionStorage}
 });
 
 //simulate a login - we will later use our backend to handle authentication

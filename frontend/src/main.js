@@ -9,6 +9,7 @@ import { BootstrapVue } from 'bootstrap-vue';
 //from notes from class
 //state managment library
 import { createPinia } from 'pinia'
+import piniaPluginPersistedState from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 
@@ -18,6 +19,8 @@ const pinia = createPinia();
 pinia.use(({ store }) => {
   store.$router = markRaw(router)
 });
+//pinia for persisted state
+pinia.use(piniaPluginPersistedState)
 
 //add pinia object to our instance
 app.use(pinia)
