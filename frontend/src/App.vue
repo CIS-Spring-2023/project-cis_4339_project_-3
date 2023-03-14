@@ -88,7 +88,7 @@ export default {
                 <span
                   style="position: relative; top: 6px"
                   class="material-icons"
-                  >services</span
+                  >management</span
                 >
                 Services
               </router-link>
@@ -134,6 +134,6 @@ export default {
 #_container {
   background-color: #c8102e;
   color: white;
-  padding: 18px;
+  padding: 20px;
 }
 </style>
