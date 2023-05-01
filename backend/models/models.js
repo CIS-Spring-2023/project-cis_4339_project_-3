@@ -2,6 +2,51 @@ const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// collection for users
+const userSchema = new Schema ({
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    required: true
+  },
+  org: {
+    type: String,
+    required: true
+  }
+},
+  {
+    collection: 'user'
+  }
+)
+
+// collection for services
+const serviceSchema = new Schema ({
+  _id: { type:String, default: uuid.v1 },
+  org: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  active: {
+    type: Boolean,
+    required: true
+  },
+},
+  {
+    collection: 'service'
+  }
+)
+
 // collection for org
 const orgDataSchema = new Schema(
   {
@@ -90,7 +135,8 @@ const eventDataSchema = new Schema(
     },
     services: [
       {
-        type: String
+        type: String,
+        ref: 'service'
       }
     ],
     date: {
@@ -133,6 +179,8 @@ const eventDataSchema = new Schema(
 const clients = mongoose.model('client', clientDataSchema)
 const orgs = mongoose.model('org', orgDataSchema)
 const events = mongoose.model('event', eventDataSchema)
+const users = mongoose.model('user', userSchema)
+const services = mongoose.model('service', serviceSchema)
 
 // package the models in an object to export
-module.exports = { clients, orgs, events }
+module.exports = { clients, orgs, events, users, services }
